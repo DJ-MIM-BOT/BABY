@@ -1,38 +1,31 @@
-const axios = require("axios");
-
+const fs = require("fs");
 module.exports = {
-  config: {
-    name: "Farhan",
-    version: "1.0.2",
-    prefix: false,
-    permission: 0,
-    credits: "Farhan",
-    description: "Fun",
-    category: "no prefix",
-    usages: "🙋‍♂️",
-    cooldowns: 5,
-  },
+  config:{
+  name: "@everyone",
+        version: "1.0.1",
+        prefix: false,
+  permssion: 0,
+  credits: "Farhan", 
+  description: "Fun",
+  category: "no prefix",
+  usages: "🙋‍♂️",
+        cooldowns: 5, 
+},
 
-  handleEvent: async function ({ api, event }) {
-    const { threadID, messageID, body } = event;
-    if (!body) return;
-
-    const lowerBody = body.toLowerCase();
-    const triggerWords = ["oi", "Farhan", "@─꯭─⃝͎̽Dɜ⃨⃔v̷ɪ͢l F⃪̌͢ʌ⃪𝆭͜͡ʀ͢ʜ͢ʌ⃪𝆭͜͡ɳ⃪ ▁▁▁╱╱😈⚔️👿", "@─꯭─⃝͎̽Dɜ⃨⃔v̷ɪ͢l F⃪̌͢ʌ⃪𝆭͜͡ʀ͢ʜ͢ʌ⃪𝆭͜͡ɳ⃪ ▁▁▁╱╱😈⚔️👿"];
-
-    if (triggerWords.some(word => lowerBody.startsWith(word))) {
-      const url = "https://i.imgur.com/yzrr9FL.mp4";
-      const res = await axios.get(url, { responseType: "stream" });
-
-      const msg = {
+handleEvent: function({ api, event, client, __GLOBAL }) {
+  var { threadID, messageID } = event;
+  const content = event.body ? event.body : '';
+  const body = content.toLowerCase();
+  if (body.indexOf("oi")==0 || body.indexOf("oii")==0 || body.indexOf("@কে'ট'বে'রি ত্যা'হ")==0 || body.indexOf("@everyone")==0) {
+    var msg = {
         body: "~ ডাকো কেনো গো, আমি আছি তো এখানে..!✋🥀",
-        attachment: res.data
-      };
-
-      api.sendMessage(msg, threadID, messageID);
-      api.setMessageReaction("😇", messageID, () => {}, true);
+        attachment: fs.createReadStream(__dirname + `/Nayan/dakoknogo.mp3`)
+      }
+      api.sendMessage( msg, threadID, messageID);
+    api.setMessageReaction("😇", event.messageID, (err) => {}, true)
     }
   },
+  start: function({ nayan }) {
 
-  start: function () {}
-};
+  }
+                                        }
